@@ -5,14 +5,9 @@ const fp = require('fastify-plugin')
 const cors = require('fastify-cors')
 const jwt = require('fastify-jwt')
 const mysql = require('fastify-mysql')
-//console.log('mysql= ', mysql)
 
 const User = require('./users')
 const UserService = require('./users/services')
-
-const Test = require('./test')
-const TestService = require('./test/services')
-
 
 async function connectToDb(fastify) {
   fastify.register(mysql, {
@@ -47,8 +42,6 @@ async function decorateFastifyInstance(fastify) {
   console.log('Decorate Loading...')
   const db = fastify.mysql
   const userService = new UserService(db)
-  const testService = new TestService()
-  
 
   fastify.decorate('userService', userService)
   
@@ -59,11 +52,7 @@ async function decorateFastifyInstance(fastify) {
       reply.send(err)
     }
   })
-
-  
-    
-  fastify.decorate('testService', testService)
-  
+ 
   console.log('Finish Decorate Loading.')
 }
 
@@ -80,5 +69,4 @@ module.exports = async function(fastify, opts) {
 
     // APIs modules
     .register(User, {prefix: '/api/users'})
-    .register(Test, {prefix: '/api/test'})
 }
