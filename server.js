@@ -8,7 +8,7 @@ const fastify = require('fastify')({
   ignoreTrailingSlash: true,
 })
 
-
+// New comment
 
 // Register swagger.
 //const swagger = require('./config/swagger')
