@@ -3,9 +3,16 @@
 //require('dotenv').config()
 
 // Require the framework
+const fs = require('fs')
+const path = require('path')
 const fastify = require('fastify')({
   logger: true,
   ignoreTrailingSlash: true,
+  http2: true,
+  https: {
+    key: fs.readFileSync(path.join(__dirname, '/app/certs/',  'ssl-cert-snakeoil.key')),
+    cert: fs.readFileSync(path.join(__dirname, '/app/certs/', 'ssl-cert-snakeoil.pem'))
+  }
 })
 
 // New comment
@@ -21,7 +28,9 @@ fastify.register(app)
 // Start listening.
 const start = async () => {
   try {
-    await fastify.listen(process.env.PORT || 8769)
+    await fastify.listen(process.env.PORT || 8769, '0.0.0.0')
+    //await fastify.listen(8769)
+
     //fastify.swagger()
   } catch (err) {
     fastify.log.error(err)
