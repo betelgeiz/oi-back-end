@@ -1,44 +1,41 @@
 'use strict'
 
 class UserService {
-  
-  constructor (db) {
-    this.db = db
-  }
 
-  async register (login, password) {
-    
-    const connection = await this.db.getConnection()
-    const [rows, fields] = await connection.query(
-      'SELECT id, login FROM users WHERE login ="' + login + '" AND password = "' + password + '"'
-    )
-    connection.release()
-    console.log(Object.keys(rows[0]))
+    constructor(db) {
+        this.db = db
+    }
 
-    return rows[0]
+    async auth(login, password) {
 
-  }
+        const connection = await this.db.connect()
+        try {
+            const { rows } = await connection.query(
+                "SELECT id, login, idcompany, typeuser, fullname FROM users WHERE login = $1 AND password = $2", [login, password]
+            )
+            return rows[0]
+        } catch (err) {} finally { connection.release() }
 
-  async getUser(id) {
+    }
 
-    const connection = await this.db.getConnection()
-    const [rows, fields] = await connection.query(
-      'SELECT * FROM users where id=?', id
-    )
-    connection.release()
-    console.log(Object.keys(rows[0]))
+    async getUser(id) {
+        const connection = await this.db.connect()
+        try {
+            const { rows } = await connection.query(
+                "SELECT login, fullname FROM users where id = $1", [id]
+            )
+            return rows[0]
+        } catch (err) {} finally { connection.release() }
+    }
 
-    return rows[0]
-  }
-
-  async addUser(first_name, last_name) {
-    const connection = await this.db.getConnection()
-    await connection.query(
-      'INSERT INTO users (first_name, last_name) VALUES ("' + first_name + '" , "' + last_name +'")',
-    )
-    connection.release()
-    return first_name + ' ' + last_name
-  }
+    async update(login, fullname, id) { /// Изменение данных компании
+        const connection = await this.db.connect()
+        console.log("body =", login, fullname, id)
+        try {
+            const { rows } = await connection.query("update users set login = $1, fullname = $2 where id = $3", [login, fullname, id])
+            return rows
+        } catch (err) {} finally { connection.release() }
+    }
 
 }
 
