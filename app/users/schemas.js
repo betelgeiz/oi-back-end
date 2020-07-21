@@ -1,6 +1,6 @@
-'use strict' 
+'use strict'
 
-const registration = {
+const auth = {
     // This jsonschema will be used for data validation
     body: {
         type: 'object',
@@ -21,7 +21,8 @@ const registration = {
         200: {
             type: 'object',
             properties: {
-                jwt: { type: 'string' }
+                jwt: { type: 'string' },
+                role: { type: 'string' }
             },
             additionalProperties: false
         }
@@ -33,12 +34,12 @@ const getuser = {
         type: 'object',
         required: ['id'],
         properties: {
-          id: {
-            type: 'string',
-            pattern: '[0-9]'
-          }
+            id: {
+                type: 'string',
+                pattern: '[0-9]'
+            }
         }
-      }
+    }
 }
 
 const adduser = {
@@ -68,8 +69,24 @@ const adduser = {
     }
 }
 
+const updateUser = {
+    body: {
+        type: 'object',
+        required: ['login', 'last_name'],
+        properties: {
+            first_name: {
+                type: 'string'
+            },
+            last_name: {
+                type: 'string'
+            }
+        },
+        additionalProperties: false
+    }
+}
+
 module.exports = {
-    registration,
+    auth,
     getuser,
     adduser
 }
