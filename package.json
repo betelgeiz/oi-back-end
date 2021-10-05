@@ -17,7 +17,7 @@
     "fastify-mysql": "^1.0.0",
     "fastify-plugin": "^1.6.0",
     "fastify-postgres": "^2.0.0",
-    "fastify-static": "^2.6.0",
+    "fastify-static": "^4.2.4",
     "fastify-swagger": "^2.5.0",
     "pg": "^7.18.2",
     "pm2": "^4.2.3"
