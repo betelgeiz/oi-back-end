@@ -22,7 +22,7 @@
     "fastify-postgres": "^3.6.0",
     "fastify-static": "^4.5.0",
     "fastify-swagger": "^4.13.1",
-    "follow-redirects": "^1.14.7",
+    "follow-redirects": "^1.14.8",
     "pg": "^8.7.1",
     "pm2": "^5.1.2"
   },
