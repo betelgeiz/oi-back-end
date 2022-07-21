@@ -28,7 +28,7 @@ fastify.register(app)
 // Start listening.
 const start = async() => {
     try {
-        await fastify.listen(process.env.PORT || 8088, '192.168.0.180', (err) => {
+        await fastify.listen(process.env.PORT || 8088, 'localhost', (err) => {
             if (err) throw err
             console.log(`server listening on ${fastify.server.address().port}`)
         })
