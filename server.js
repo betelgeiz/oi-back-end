@@ -3,16 +3,16 @@
 //require('dotenv').config()
 
 // Require the framework
-const fs = require('fs')
-const path = require('path')
+//const fs = require('fs')
+//const path = require('path')
 const fastify = require('fastify')({
-  logger: true,
-  ignoreTrailingSlash: true,
-  http2: true,
-  https: {
-    key: fs.readFileSync(path.join(__dirname, '/app/certs/',  'ssl-cert-snakeoil.key')),
-    cert: fs.readFileSync(path.join(__dirname, '/app/certs/', 'ssl-cert-snakeoil.pem'))
-  }
+    logger: true,
+    ignoreTrailingSlash: true
+    // http2: true,
+    // https: {
+    //   key: fs.readFileSync(path.join(__dirname, '/app/certs/',  'ssl-cert-snakeoil.key')),
+    //   cert: fs.readFileSync(path.join(__dirname, '/app/certs/', 'ssl-cert-snakeoil.pem'))
+    // }
 })
 
 // New comment
@@ -26,16 +26,19 @@ const app = require('./app')
 fastify.register(app)
 
 // Start listening.
-const start = async () => {
-  try {
-    await fastify.listen(process.env.PORT || 8769, '0.0.0.0')
-    //await fastify.listen(8769)
+const start = async() => {
+    try {
+        await fastify.listen(process.env.PORT || 8088, '192.168.0.180', (err) => {
+            if (err) throw err
+            console.log(`server listening on ${fastify.server.address().port}`)
+        })
+            //await fastify.listen(8769)
 
-    //fastify.swagger()
-  } catch (err) {
-    fastify.log.error(err)
-    process.exit(1)
-  }
+        //fastify.swagger()
+    } catch (err) {
+        fastify.log.error(err)
+        process.exit(1)
+    }
 }
 start()
 

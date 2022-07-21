@@ -3,8 +3,11 @@
 const addreport = { // Добавить отчет
     body: {
         type: 'object',
-        required: ['typedoc', 'xmldoc', 'sender', 'status', 'kvartal'],
+        required: ['docslayoutid','typedoc', 'xmldoc', 'sender', 'status', 'kvartal'],
         properties: {
+            docslayoutid:{
+                type:'integer'
+            },
             typedoc: {
                 type: 'string'
             },
@@ -22,16 +25,28 @@ const addreport = { // Добавить отчет
             }
         },
         additionalProperties: false
+    },
+    response: {
+      // The 200 body response is described
+      // by the following schema
+      200: {
+        type: 'object',
+        properties: {
+            idReport: { type: 'integer' }
+        },
+        additionalProperties: false
+      }
     }
 }
 
 const confirmReport = { // Подтвердить документ от имени получателя
     body: {
         type: 'object',
-        required: ['id', 'interrefer'],
+        required: ['id', 'refer','ref'],
         properties: {
             id: { type: 'integer' },
-            interrefer: { type: 'string' }
+            refer: { type: 'string' },
+            ref:{type:'integer'}
         },
         additionalProperties: false
     }
@@ -40,11 +55,13 @@ const confirmReport = { // Подтвердить документ от имен
 const updateReport = { // Изменить документ
     body: {
         type: 'object',
-        required: ['id', 'doc', 'status'],
+        required: ['id', 'doc', 'status', 'kvartal', 'typedoc'],
         properties: {
             id: { type: 'integer' },
             doc: { type: 'string' },
-            status: { type: 'integer' }
+            status: { type: 'integer' },
+            kvartal: { type: 'string' },
+            typedoc: { type: 'string' }
         },
         additionalProperties: false
     }
@@ -84,10 +101,24 @@ const addLink = { // Добавление ссылки на документ о�
     }
 }
 
+const search = { // поисковый запрос
+    body: {
+        type: 'object',
+        required: ['search', 'page', 'limit'],
+        properties: {
+            search: {type: 'string'},
+            page: {type: 'integer'},
+            limit: {type: 'integer'}
+        },
+        additionalProperties: false
+    }
+}
+
 
 module.exports = {
     addreport,
     updateStatus,
     updateReport,
-    confirmReport
+    confirmReport,
+    search
 }

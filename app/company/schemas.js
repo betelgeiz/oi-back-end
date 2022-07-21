@@ -3,7 +3,7 @@
 const updateCompany = {
     body: {
         type: 'object',
-        required: ['name', 'opforma', 'activity', 'address', 'phone', 'fax', 'email', 'supervisor', 'id'],
+        required: ['name', 'opforma', 'activity', 'address', 'phone', 'fax', 'email', 'supervisor', 'id', 'first_signers'],
         properties: {
             name: {
                 type: 'string'
@@ -31,7 +31,11 @@ const updateCompany = {
             },
             id: {
                 type: 'integer'
+            },
+            first_signers: {
+                type: 'integer'
             }
+
         },
         additionalProperties: false
     }
@@ -58,7 +62,7 @@ const addCompany = {
         type: 'object',
         required: [ 'id' ],
         properties: {
-          idCompany: { type: 'integer' }
+          id: { type: 'integer' }
         },
         additionalProperties: false
       }

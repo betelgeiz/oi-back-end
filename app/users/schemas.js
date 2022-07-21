@@ -22,9 +22,9 @@ const auth = {
             type: 'object',
             properties: {
                 jwt: { type: 'string' },
-                role: { type: 'string' }
-            },
-            additionalProperties: false
+                role: { type: 'string' },
+                changePas: {type: 'string', pattern: '[0-9]'}
+            }
         }
     }
 }
@@ -84,6 +84,7 @@ const updateUser = {
         additionalProperties: false
     }
 }
+
 
 module.exports = {
     auth,
